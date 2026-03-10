@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrazyWalkingBehaviour : MonoBehaviour
+public class CrazyWalkingBehaviour : MonoBehaviour, IBehavior
 {
     private CharacterController _characterController;
     private Mover _mover;
@@ -47,5 +47,10 @@ public class CrazyWalkingBehaviour : MonoBehaviour
         return new Vector3(randomPoint.x, 0, randomPoint.y).normalized;
         //Vector3 direction = new Vector3(Random.Range(0, 360)* Random.Range(8,50), 0, Random.Range(0, 360)* Random.Range(8, 50));
         //return direction;
+    }
+
+    public void Execute()
+    {
+        
     }
 }

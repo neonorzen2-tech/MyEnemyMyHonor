@@ -4,12 +4,18 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
-public class FrightAndDeadBehaviour : MonoBehaviour
+public class FrightAndDeadBehaviour : MonoBehaviour, IBehavior
 {
     private float _currentScale;
     private float _currentScaleTwo;
     private float _currentScaleResult;
     private float _rotateSpeed = 33;
+
+    public void Execute()
+    {
+        
+    }
+
     //[SerializeField] private ParticleSystem _particleSisPrefab;
 
 

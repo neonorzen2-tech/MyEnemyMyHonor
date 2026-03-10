@@ -262,4 +262,7 @@ MonoBehaviour:
     type: 3}
   _crazyWalkingBehaviour: {fileID: 7067054019802091677, guid: a72eaf70e06a2764599f52606f85cdc4,
     type: 3}
-  nPCBehaviorTypes: 0
+  nPCBehaviorTypes: 1
+  nPCBehaviorTypes2: 2
+  _playerController: {fileID: 2297278716827796020, guid: 538b1a3c1b8194841bb50a616eddcdde,
+    type: 3}

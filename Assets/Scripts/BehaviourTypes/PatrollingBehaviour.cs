@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrollingBehaviour : MonoBehaviour
+public class PatrollingBehaviour : MonoBehaviour, IBehavior
 {
     private CharacterController _characterController;
     private Mover _mover;
@@ -75,5 +75,10 @@ public class PatrollingBehaviour : MonoBehaviour
         Vector3 direction = new Vector3();
         direction = currentTurget - transform.position;
         return direction;
+    }
+
+    public void Execute()
+    {
+        
     }
 }

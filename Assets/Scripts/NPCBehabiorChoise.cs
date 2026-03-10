@@ -13,36 +13,35 @@ public class NPCBehabiorChoise : MonoBehaviour
     [SerializeField] private CrazyWalkingBehaviour _crazyWalkingBehaviour;
 
     [SerializeField] private NPCBehaviorTypes nPCBehaviorTypes;
+    [SerializeField] private NPCBehaviorTypes nPCBehaviorTypes2;
 
-    private bool _scriptIsFinded;
+    [SerializeField] private PlayerController _playerController;
+     
+    private float _distanceForChangeBehaviour = 10;
 
     private void Awake()
     {
+        //_playerController = GetComponent<PlayerController>();
         _idleBehaviour.enabled = false;
         _frightAndDeadBehaviour.enabled = false;
         _flightFromTargetBehaviour.enabled = false;
         _patrollingBehaviour.enabled = false;
         _crazyWalkingBehaviour.enabled = false;
-        ////тут получается если они в начале, то не найдены скрипты. если после геткомпонент, то они все срабатывают
+        //тут получается если они в начале, то не найдены скрипты. если после геткомпонент, то они все срабатывают
+        //|| _attackOnTargetBehaviour == null
 
-        //_idleBehaviour = GetComponent<IdleBehaviour>();
-        //_frightAndDeadBehaviour = GetComponent<FrightAndDeadBehaviour>();
-        //_flightFromTargetBehaviour = GetComponent<FlightFromTargetBehaviour>();
-        ////_attackOnTargetBehaviour = GetComponent<AttackOnTargetBehaviour>();|| _attackOnTargetBehaviour == null 
-        //_patrollingBehaviour = GetComponent<PatrollingBehaviour>();
-        //_crazyWalkingBehaviour = GetComponent<CrazyWalkingBehaviour>();
-
-
-
-        //if (_idleBehaviour == null || _frightAndDeadBehaviour == null || _flightFromTargetBehaviour == null || _patrollingBehaviour == null || _crazyWalkingBehaviour == null)
-        //{
-        //    Debug.Log(" Скрипт поведения не найден! Какой - сам разбересся");
-        //    return;
-        //}
-
-        BehaviourChoise(nPCBehaviorTypes);
+        if (_idleBehaviour == null || _frightAndDeadBehaviour == null || _flightFromTargetBehaviour == null || _patrollingBehaviour == null || _crazyWalkingBehaviour == null)
+        {
+            Debug.Log(" Скрипт поведения не найден! Какой - сам разбересся");
+            return;
+        }
     }
-    //_scriptIsFinded == true
+
+    private void Update()
+    {
+        SwitchBehaviour(nPCBehaviorTypes, nPCBehaviorTypes2, _playerController);
+    }
+    
     private void BehaviourChoise(NPCBehaviorTypes nPCBehaviorTypes)
     {
         switch (nPCBehaviorTypes)
@@ -78,6 +77,15 @@ public class NPCBehabiorChoise : MonoBehaviour
                 Debug.Log("нет такого типа поведения");
                 return;
         }
+    }
 
+    private void SwitchBehaviour(NPCBehaviorTypes nPCBehavior, NPCBehaviorTypes nPCBehavior1, Component target)
+    {
+
+        Vector3 distanceToTarget = target.transform.position - transform.position;
+        if (distanceToTarget.magnitude > _distanceForChangeBehaviour)
+            BehaviourChoise(nPCBehaviorTypes);
+        else
+            BehaviourChoise(nPCBehaviorTypes2);
     }
 }

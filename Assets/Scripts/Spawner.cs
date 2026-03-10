@@ -10,17 +10,12 @@ public class Spawner : MonoBehaviour
     private Queue<Vector3> _prefabPosition = new Queue<Vector3>();
     private float offSetY = 5;
 
-    
-
-    
     private void Start()
     //Awake() - поменял эвэйк на старт, так ии написал:
     //Почему Start обычно безопаснее для поиска других объектов:
     // еще не доготовлено чтото будет на Awake() ...
     // Awake вызывается, даже если компонент (скрипт) выключен, Start даст более предсказуемый результат. 
     // Если вы ищете объекты, которые сами динамически создают свой контент в Awake. Например, если скрипт «Генератор» создает врагов в своем Awake, то ваш скрипт поиска найдет их только в Start.
-
-
 
     // в эвэйке, когда я размещу перед стартом игры надо будет чтобы в каждой точке
     // где стоит спавн поинт, вызвался враг.
@@ -30,37 +25,37 @@ public class Spawner : MonoBehaviour
     //!!!! тут я прописываю, вроде, метод спавна, а что-то должно быть на другом объекте?
     {
         //найти на сцене точки спавна.
-        //или можно было бы каждый объект, но эьо если через инстншиэйт, присваивать переменную... но не мой вариант.
+        //или можно было бы каждый объект, но это если через инстншиэйт, присваивать переменную... но не мой вариант.
 
+        FindSpawnPoint();
+        SpawnTo();
+    }
+
+    private void SpawnTo()
+    {
+        while (_prefabPosition.Count > 0)
+        {
+            Vector3 spawnPoint = _prefabPosition.Dequeue();
+            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y - offSetY, spawnPoint.z);
+            Instantiate(_enemyPrefab, spawnPoint, Quaternion.identity);
+        }
+    }
+
+    private void FindSpawnPoint()
+    {
         SpawnPointPrefab[] spawnPointsPrefab = Object.FindObjectsByType<SpawnPointPrefab>(FindObjectsSortMode.None);
         foreach (var spawnPoint in spawnPointsPrefab)
         {
             Vector3 spawnPointPosition = spawnPoint.transform.position;
             _prefabPosition.Enqueue(spawnPointPosition);
         }
-        SpawnTo();
-
     }
-
-    private void SpawnTo()
-    {
-        
-
-        while (_prefabPosition.Count > 0)
-        {
-            Vector3 spavnPoint = _prefabPosition.Dequeue();
-            spavnPoint = new Vector3(spavnPoint.x, spavnPoint.y - offSetY, spavnPoint.z);
-            Instantiate(_enemyPrefab, spavnPoint, Quaternion.identity);
-        }
-    }
-
-    
 }
 //foreach (var pos in _prefabPosition)
-        //{
-        //    Vector3 spawnPoint = new Vector3(pos.x, pos.y - offSetY, pos.z);
-        //    Instantiate(_enemyPrefab, spawnPoint, Quaternion.identity);
-        //}
+//{
+//    Vector3 spawnPoint = new Vector3(pos.x, pos.y - offSetY, pos.z);
+//    Instantiate(_enemyPrefab, spawnPoint, Quaternion.identity);
+//}
 
 //private List<Transform> transformList;
 //    [SerializeField] private Transform _spawnPointPrefab;

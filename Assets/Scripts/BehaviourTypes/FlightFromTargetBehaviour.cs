@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-public class FlightFromTargetBehaviour : MonoBehaviour
+public class FlightFromTargetBehaviour : MonoBehaviour, IBehavior
 {
     private CharacterController _characterController;
     private PlayerController _target;
@@ -56,5 +56,10 @@ public class FlightFromTargetBehaviour : MonoBehaviour
         targetDirection = target.transform.position - transform.position;
         
         return targetDirection;
+    }
+
+    public void Execute()
+    {
+        
     }
 }
