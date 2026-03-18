@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrazyWalkingBehaviour : MonoBehaviour, IBehavior
+public class CrazyWalkingBehaviour : IBehaviour
 {
     private CharacterController _characterController;
     private Mover _mover;
@@ -13,20 +13,14 @@ public class CrazyWalkingBehaviour : MonoBehaviour, IBehavior
     private float _timeForTurn = 1f;
     private float _time;
 
-    private void Awake()
+    public CrazyWalkingBehaviour(Mover mover, Rotator rotator)
     {
+        _mover = mover;
+        _rotator = rotator;
+
         _currentTarget = Direction();
-        _characterController = GetComponent<CharacterController>();
-        _mover = GetComponent<Mover>();
-        _rotator = GetComponent<Rotator>();
-
-        if (_characterController == null) Debug.LogError("Нет CharacterController!", this);
-        if (_mover == null || _rotator == null) Debug.LogError("Нет MoverRotator!", this);
-
-
-
     }
-    private void Update()
+    public void Execute()
     {
         _time += Time.deltaTime;
         if (_time >= _timeForTurn)
@@ -40,17 +34,12 @@ public class CrazyWalkingBehaviour : MonoBehaviour, IBehavior
             _rotator.ProcessRotateTo(_currentTarget.normalized);
         }
     }
-
+       
     private Vector3 Direction()
     {
         Vector2 randomPoint = Random.insideUnitCircle;
         return new Vector3(randomPoint.x, 0, randomPoint.y).normalized;
         //Vector3 direction = new Vector3(Random.Range(0, 360)* Random.Range(8,50), 0, Random.Range(0, 360)* Random.Range(8, 50));
         //return direction;
-    }
-
-    public void Execute()
-    {
-        
     }
 }

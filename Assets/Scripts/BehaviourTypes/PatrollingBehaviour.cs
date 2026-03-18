@@ -1,61 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class PatrollingBehaviour : MonoBehaviour, IBehavior
+public class PatrollingBehaviour : IBehaviour
 {
     private CharacterController _characterController;
     private Mover _mover;
     private Rotator _rotator;
+    private Transform _transform;
 
-    [SerializeField] private NPC enemyPrefab;
-    
     private Queue<Vector3> _patrollPoint;
     private Vector3 _currentTarget;
     
-    private float positionMax = -7f;
-    private float positionMin = 7f;
+    private float positionMax = 7f;
+    private float positionMin = -7f;
 
     private float _distance = 1.5f;
-
-    private void Awake()
+    public PatrollingBehaviour(Mover mover, Rotator rotator, Transform transform)
     {
-        _characterController = GetComponent<CharacterController>();
-        _mover = GetComponent<Mover>();
-        _rotator = GetComponent<Rotator>();
+        _mover = mover;
+        _rotator = rotator;
+        _transform = transform;
 
-        if (_characterController == null) Debug.LogError("Нет CharacterController!", this);
-        if (_mover == null || _rotator == null) Debug.LogError("Нет MoverRotator!", this);
-
-        _patrollPoint = new Queue<Vector3>();
+         _patrollPoint = new Queue<Vector3>();
         GeneratePatrolPoints();
-        _currentTarget = CurrentPointCreator(_patrollPoint);
-        Vector3 direction = Direction(_currentTarget);
+        _currentTarget = CurrentPointCreator(_patrollPoint);        
     }
 
-    void Update()
-    {    
-        Vector3 direction = Direction(_currentTarget);
+    public void Execute()
+    {
+         Vector3 direction = Direction(_currentTarget);
         if (direction.magnitude <= _distance)
         {
-
-            if (_patrollPoint.Count == 0)
-            {
-                GeneratePatrolPoints();
-            }
             _currentTarget = CurrentPointCreator(_patrollPoint);
+            direction = Direction(_currentTarget);
         }
         direction = direction.normalized;
         _mover.ProcessMoveTo(direction);
         _rotator.ProcessRotateTo(direction);
-    }
+    }    
 
     private Queue<Vector3> GeneratePatrolPoints()
     {
+
         int numberOfPoints = 5;
         for (int i = 0; i < numberOfPoints; i++)
         {
-            Vector3 randomPosition = transform.position + new Vector3(Random.Range(positionMin, positionMax), 0, Random.Range(positionMin, positionMax));
+            Vector3 randomPosition = _transform.position + new Vector3(Random.Range(positionMin, positionMax), 0, Random.Range(positionMin, positionMax));
             _patrollPoint.Enqueue(randomPosition);
 
             Debug.Log(randomPosition);
@@ -65,20 +57,16 @@ public class PatrollingBehaviour : MonoBehaviour, IBehavior
 
     private Vector3 CurrentPointCreator(Queue<Vector3> patrollPoint)
     {
-        _currentTarget = _patrollPoint.Dequeue();
-        _patrollPoint.Enqueue(_currentTarget);
-        return _currentTarget;
+        Vector3 point = patrollPoint.Dequeue();
+        patrollPoint.Enqueue(point);
+        return point;
     }
 
     private Vector3 Direction(Vector3 currentTurget)
     {
-        Vector3 direction = new Vector3();
-        direction = currentTurget - transform.position;
-        return direction;
-    }
-
-    public void Execute()
-    {
-        
+        //Vector3 direction = new Vector3();
+        //direction = currentTurget - _transform.position;
+        //return direction;
+        return currentTurget - _transform.position;
     }
 }

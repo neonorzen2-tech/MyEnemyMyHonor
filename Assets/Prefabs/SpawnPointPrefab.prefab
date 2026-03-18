@@ -130,8 +130,7 @@ GameObject:
   - component: {fileID: 8126280420772881754}
   - component: {fileID: 1410406615984367908}
   - component: {fileID: 8383546033635587735}
-  - component: {fileID: -2206822466520090144}
-  - component: {fileID: 2654011117047909534}
+  - component: {fileID: -5354660010059443368}
   m_Layer: 0
   m_Name: SpawnPointPrefab
   m_TagString: Untagged
@@ -228,7 +227,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &-2206822466520090144
+--- !u!114 &-5354660010059443368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,32 +236,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7953083069015887211}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5219c68db6b8fc74fad133b671c84afb, type: 3}
+  m_Script: {fileID: 11500000, guid: 448279824f79e0241b4342035332b9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2654011117047909534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7953083069015887211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2cfb608554d0f047b064f0a3aeba462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _idleBehaviour: {fileID: 2685489878418937188, guid: a72eaf70e06a2764599f52606f85cdc4,
-    type: 3}
-  _frightAndDeadBehaviour: {fileID: 6899271569485504082, guid: a72eaf70e06a2764599f52606f85cdc4,
-    type: 3}
-  _flightFromTargetBehaviour: {fileID: 8701636651054920195, guid: a72eaf70e06a2764599f52606f85cdc4,
-    type: 3}
-  _patrollingBehaviour: {fileID: 5252578903470689496, guid: a72eaf70e06a2764599f52606f85cdc4,
-    type: 3}
-  _crazyWalkingBehaviour: {fileID: 7067054019802091677, guid: a72eaf70e06a2764599f52606f85cdc4,
-    type: 3}
-  nPCBehaviorTypes: 1
-  nPCBehaviorTypes2: 2
-  _playerController: {fileID: 2297278716827796020, guid: 538b1a3c1b8194841bb50a616eddcdde,
-    type: 3}
+  nPCBehaviorTypes: 0
+  nPCBehaviorTypes2: 0
+  _playerControllerTransform: {fileID: 0}

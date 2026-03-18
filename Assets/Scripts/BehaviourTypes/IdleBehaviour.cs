@@ -1,11 +1,10 @@
 using System.Diagnostics;
 using UnityEngine;
 
-public class IdleBehaviour : MonoBehaviour, IBehavior
+public class IdleBehaviour : IBehaviour
 
 {
-      
-    void IBehavior.Execute()
+    public void Execute()
     {
         
     }

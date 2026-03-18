@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum NPCBehaviorTypes
+public enum NPCBehaviourTypes
 {
     Idle,
     Patrolling,
