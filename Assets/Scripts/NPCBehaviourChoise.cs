@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 public class NPCBehaviourChoise : MonoBehaviour
 {
 
-    [SerializeField] private NPCBehaviourTypes nPCBehaviorTypes;
-    [SerializeField] private NPCBehaviourTypes nPCBehaviorTypes2;
+    [SerializeField] private NPCBehaviourTypes npcBehaviorTypes;
+    [SerializeField] private NPCBehaviourTypes npcBehaviorTypes2;
 
     [SerializeField] private Transform _playerControllerTransform;
 
@@ -16,15 +16,15 @@ public class NPCBehaviourChoise : MonoBehaviour
     private Rotator _rotator;
     private NPC _npc;
     private GameObject _npcGameObject;
-    private Destroer _destroer;
+    
 
     private void Awake()
     {
         _npcGameObject = GetComponent<GameObject>();
-        _destroer = GetComponent<Destroer>();
-        _mover = GetComponent<Mover>();
+        
+        //_mover = GetComponent<Mover>();
         //_playerController = GetComponent<PlayerController>();
-        _rotator = GetComponent<Rotator>();
+        //_rotator = GetComponent<Rotator>();
         _npc = GetComponent<NPC>();
     }
 
@@ -67,15 +67,15 @@ public IBehaviour BehaviourChoise(NPCBehaviourTypes nPCBehaviorTypes, NPC npc)
                 return new CrazyWalkingBehaviour(_mover, _rotator);
 
 
-            //case NPCBehaviourTypes.FlightFromTarget:
+            case NPCBehaviourTypes.FlightFromTarget:
 
-            //    return new FlightFromTargetBehaviour(_playerControllerTransform);
+                return new FlightFromTargetBehaviour(_mover, _rotator, _playerControllerTransform);
 
             case NPCBehaviourTypes.AttackOnTarget:
                 return new AttackOnTargetBehaviour(_mover, _rotator, _playerControllerTransform);
 
             case NPCBehaviourTypes.FrightAndDead:
-                return new FrightAndDeadBehaviour(_npcGameObject, _destroer);
+                return new FrightAndDeadBehaviour(_npcGameObject);
 
             default:
                 Debug.Log("нет такого типа поведения");
@@ -86,10 +86,11 @@ public IBehaviour BehaviourChoise(NPCBehaviourTypes nPCBehaviorTypes, NPC npc)
 
     public IBehaviour GetIdleBehaviour(NPC npc)
     {
-       return BehaviourChoise(nPCBehaviorTypes, npc);
+       return BehaviourChoise(npcBehaviorTypes, npc);
     }
 
    // !!!! вот это скопировал, пытался понять, но пока не понял, может сможешь объяснить?
-    public IBehaviour GetAggroBehaviour(NPC npc) => BehaviourChoise(nPCBehaviorTypes2, npc);
+    public IBehaviour GetAggroBehaviour(NPC npc) => BehaviourChoise(npcBehaviorTypes2, npc);
 
 }
+

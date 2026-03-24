@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private SpawnPoint _spawnPointPrefab; 
+
+    //ТУТ ЕЩЕ БУДУ ДОДЕЛЫВАТЬ, РАЗБИРАТЬСЯ.
+    [SerializeField] private NPCBehaviourChoise _spawnPointPrefab; 
     
     [SerializeField] private NPC _enemyPrefab;
 
@@ -16,7 +18,7 @@ public class Spawner : MonoBehaviour
     // инстансах спавнпоинтов и спавнпоинты закидывать в лист?
     [SerializeField] private  List<NPCBehaviourChoise> npcBehaviourChoises;
 
-    private Queue<SpawnPoint> _prefabPosition = new Queue<SpawnPoint>();
+    private Queue<NPCBehaviourChoise> _prefabPosition = new Queue<NPCBehaviourChoise>();
     private float offSetY = 4;
 
     private List<NPC> _spawnedEnemies;
@@ -32,11 +34,16 @@ public class Spawner : MonoBehaviour
         _spawnedEnemies = new List<NPC>();
         while (_prefabPosition.Count > 0)
         {
-            SpawnPoint spawnPoint = _prefabPosition.Dequeue();
+            NPCBehaviourChoise spawnPoint = _prefabPosition.Dequeue();
             Vector3 spawnPointPosition = spawnPoint.transform.position;
             spawnPointPosition.y -= offSetY;
             NPC newEnemy = Instantiate(_enemyPrefab, spawnPointPosition, Quaternion.identity);
 
+            
+           IBehaviour idle = _spawnPointPrefab.GetIdleBehaviour(newEnemy);
+            IBehaviour aggro = _spawnPointPrefab.GetAggroBehaviour(newEnemy);
+            newEnemy.SetIdleBehaviour(idle);
+            newEnemy.SetAggroBehaviour(aggro);
             _spawnedEnemies.Add(newEnemy);
         }
         Debug.Log(_spawnedEnemies.Count + "Count");
@@ -45,12 +52,12 @@ public class Spawner : MonoBehaviour
 
     private void FindSpawnPoint()
     {
-    
-        // ВОТ ТУТ НЕ ПОНИМАЮ...
-        SpawnPoint[] spawnPointsPrefab = Object.FindObjectsByType<SpawnPoint>(FindObjectsSortMode.None);
+
+        // ВОТ ТУТ НЕ ПОНИМАЮ... вроде ты писал что это не использовать, тогда просто забросить все точки через инспектора?
+        NPCBehaviourChoise[] spawnPointsPrefab = Object.FindObjectsByType<NPCBehaviourChoise>(FindObjectsSortMode.None);
         foreach (var spawnPoint in spawnPointsPrefab)
         {
-            SpawnPoint spawnPointPosition = spawnPoint;
+            NPCBehaviourChoise spawnPointPosition = spawnPoint;
             _prefabPosition.Enqueue(spawnPointPosition);
         }
     }

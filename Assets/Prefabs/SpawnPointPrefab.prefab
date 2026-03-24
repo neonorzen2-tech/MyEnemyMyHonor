@@ -239,6 +239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448279824f79e0241b4342035332b9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nPCBehaviorTypes: 0
-  nPCBehaviorTypes2: 0
+  npcBehaviorTypes: 0
+  npcBehaviorTypes2: 1
   _playerControllerTransform: {fileID: 0}

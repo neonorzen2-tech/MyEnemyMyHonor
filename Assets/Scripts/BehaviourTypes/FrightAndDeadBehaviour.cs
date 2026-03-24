@@ -4,20 +4,20 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
-public class FrightAndDeadBehaviour : Destroer, IBehaviour
+public class FrightAndDeadBehaviour :  IBehaviour
 {
     private float _currentScale;
     private float _currentScaleTwo;
     private float _currentScaleResult;
     private float _rotateSpeed = 33;
-    private Destroer _destroer;
+   
     private GameObject _gameObject;
 
 
 
-    public FrightAndDeadBehaviour(GameObject gameObject, Destroer destroer)
+    public FrightAndDeadBehaviour(GameObject gameObject)
     {
-        _destroer = destroer;
+        
         _gameObject = gameObject;
         _currentScale = _gameObject.transform.localScale.y;
     }
@@ -25,7 +25,7 @@ public class FrightAndDeadBehaviour : Destroer, IBehaviour
     public void Execute()
     {
         if (_currentScale < 0)
-            _destroer.DestroyMethod(_gameObject);
+            Object.Destroy(_gameObject);
         _gameObject.transform.Rotate(0, _rotateSpeed, 0);
         _currentScale -= Time.deltaTime / 5;
         _currentScaleTwo += Time.deltaTime / 8;
@@ -44,11 +44,5 @@ public class FrightAndDeadBehaviour : Destroer, IBehaviour
    
 }
 
-public class Destroer: MonoBehaviour
-{
-    public void DestroyMethod(GameObject gameObject)
-    {
-        Destroy(gameObject);
-    }
-}
+
 
